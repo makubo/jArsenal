@@ -81,7 +81,11 @@ public class FXMLDocumentController implements Initializable {
         int seed = Integer.valueOf(seedField.getText());
         hmap = new HillMap(size);
         hmap.setSeed(seed);
-        map = new Map(hmap.generateMap(), size);
+        
+        DiamondSquareMap m = new DiamondSquareMap(size);
+        m.setSeed(seed);
+        map = new Map(m.generateMap(), size, seed);
+        //map = new Map(hmap.generateMap(), size, seed);
         //int[][] matr = hmap.generateMap();
 
         
@@ -194,13 +198,13 @@ public class FXMLDocumentController implements Initializable {
             //drawClicked();
         });
 
-        mapPanel.addEventFilter(
-                MouseEvent.ANY,
-                new EventHandler<MouseEvent>() {
-            public void handle(final MouseEvent mouseEvent) {
-                mouseEvent.consume();
-            }
-        });
+//        mapPanel.addEventFilter(
+//                MouseEvent.ANY,
+//                new EventHandler<MouseEvent>() {
+//            public void handle(final MouseEvent mouseEvent) {
+//                mouseEvent.consume();
+//            }
+//        });
         
         mapPanel.addEventFilter(
                 MouseEvent.MOUSE_PRESSED,

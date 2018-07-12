@@ -5,6 +5,8 @@
  */
 package jarsenal;
 
+import java.util.Random;
+
 /**
  *
  * @author MaxON
@@ -16,16 +18,18 @@ public class Map {
     private int[][] fakeLandscape;
     private int[][] tileMap;
     private final int size;
+    private static Random rnd;
 
-    public Map(int[][] landscape, int size) {
+    public Map(int[][] landscape, int size, int seed) {
         this.landscape = landscape;
         this.size = size;
-        generateTileMap();
+        generateTileMap(seed);
     }
 
-    private void generateTileMap() {
+    private void generateTileMap(int seed) {
         tileMap = new int[size][size];
-
+        
+        rnd = new Random(seed);
         //int[][] 
         fakeLandscape = copyArray(landscape);
 
@@ -59,19 +63,19 @@ public class Map {
                 if (isLeftTopCorner(x, y)) {
                     tileMap[x][y] += 1;
                 } else if (isTopNormal(x, y)) {
-                    tileMap[x][y] += 2;
+                    tileMap[x][y] += 2 + randomBeech(tileMap[x][y]);
                 } else if (isRightTopCorner(x, y)) {
                     tileMap[x][y] += 3;
                 } else if (isRightNormal(x, y)) {
-                    tileMap[x][y] += 4;
+                    tileMap[x][y] += 4 + randomBeech(tileMap[x][y]);
                 } else if (isRightBottomCorner(x, y)) {
                     tileMap[x][y] += 5;
                 } else if (isBottomNormal(x, y)) {
-                    tileMap[x][y] += 6;
+                    tileMap[x][y] += 6 + randomBeech(tileMap[x][y]);
                 } else if (isLeftBottomCorner(x, y)) {
                     tileMap[x][y] += 7;
                 } else if (isLeftNormal(x, y)) {
-                    tileMap[x][y] += 8;
+                    tileMap[x][y] += 8 + randomBeech(tileMap[x][y]);
                 } else if (isLeftCape(x, y)) {
                     tileMap[x][y] += 9;
                 } else if (isHorisontal(x, y)) {
@@ -103,6 +107,13 @@ public class Map {
         return tileMap;
     }
 
+    private int randomBeech( int value ) {
+        if ( value == 4000 ) {
+            return rnd.nextInt(2) * 100;
+        }
+        return 0;
+    }
+    
     private int next(int x) {
         if (x == size - 1) {
             return 0;
@@ -120,8 +131,8 @@ public class Map {
     }
 
     private boolean isLeftTopCorner(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[x][next(y)]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[x][next(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[prev(x)][y]) {
             return true;
@@ -131,10 +142,10 @@ public class Map {
     }
 
     private boolean isTopNormal(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]) {
             return true;
         } else {
             return false;
