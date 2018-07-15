@@ -164,7 +164,7 @@ public class Map {
     }
 
     private boolean isRightNormal(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
@@ -209,7 +209,7 @@ public class Map {
 
     private boolean isLeftNormal(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
             return true;

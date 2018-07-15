@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -212,10 +213,12 @@ public class FXMLDocumentController implements Initializable {
             public void handle(final MouseEvent mouseEvent) {
                 // remember initial mouse cursor coordinates
                 // and node position
-                dragContext.mouseAnchorX = mouseEvent.getSceneX();
-                dragContext.mouseAnchorY = mouseEvent.getSceneY();
-                dragContext.initialTranslateX = mapPanel.getTranslateX();
-                dragContext.initialTranslateY = mapPanel.getTranslateY();
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+                    dragContext.mouseAnchorX = mouseEvent.getSceneX();
+                    dragContext.mouseAnchorY = mouseEvent.getSceneY();
+                    dragContext.initialTranslateX = mapPanel.getTranslateX();
+                    dragContext.initialTranslateY = mapPanel.getTranslateY();
+                }
 
             }
         });
@@ -226,6 +229,7 @@ public class FXMLDocumentController implements Initializable {
             public void handle(final MouseEvent mouseEvent) {
                 // shift node from its initial position by delta
                 // calculated from mouse cursor movement
+                if (mouseEvent.getButton() == MouseButton.PRIMARY) {
                 mapPanel.setTranslateX(
                         dragContext.initialTranslateX
                         + mouseEvent.getSceneX()
@@ -235,6 +239,7 @@ public class FXMLDocumentController implements Initializable {
                         + mouseEvent.getSceneY()
                         - dragContext.mouseAnchorY);
                 label.setText("" + mouseEvent.getX() + " " + mouseEvent.getY());
+                }
             }
         });
         
@@ -250,6 +255,38 @@ public class FXMLDocumentController implements Initializable {
                     //case SHIFT: running = true; break;
                 }
                 fc.getFrame();
+            }
+        });
+        
+        anchorPane.addEventFilter(
+                MouseEvent.MOUSE_PRESSED,
+                new EventHandler<MouseEvent>() {
+            public void handle(final MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.MIDDLE) {
+                    dragContext.mouseAnchorX = mouseEvent.getSceneX();
+                    dragContext.mouseAnchorY = mouseEvent.getSceneY();
+                    dragContext.initialTranslateX = fc.getxPosition();
+                    dragContext.initialTranslateY = fc.getyPosition();
+                }
+            }
+        });
+        
+        anchorPane.addEventFilter(
+                MouseEvent.MOUSE_DRAGGED,
+                new EventHandler<MouseEvent>() {
+            public void handle(final MouseEvent mouseEvent) {
+                if (mouseEvent.getButton() == MouseButton.MIDDLE) {
+                    fc.setxPosition(
+                            (int)( dragContext.initialTranslateX
+                            - ((int) (mouseEvent.getSceneX()
+                            - dragContext.mouseAnchorX) / 12 * 12 )));
+                    fc.setyPosition( (int)(
+                            dragContext.initialTranslateY
+                            - ((int) (mouseEvent.getSceneY()
+                            - dragContext.mouseAnchorY) / 12 * 12)));
+                    fc.getFrame();
+
+                }
             }
         });
     }

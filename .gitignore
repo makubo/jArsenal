@@ -14,3 +14,6 @@ hs_err_pid*
 /graphics/
 /graphics.1/
 /nbproject/configs/
+/nbproject/private/
+/build/
+/dist/
