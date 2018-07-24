@@ -68,13 +68,9 @@ public class DiamondSquareMap {
                     diamondProceed(x, y, step);
                 }
             }
-            //drawMap(map);
         }
 
-        //normalizeMap();
-        //drawMap(map);
         return normalizeMap();
-        //return map;
 
     }
     
@@ -178,7 +174,30 @@ public class DiamondSquareMap {
             }
         }
         
+        fixMap( normMap );
+        
         return normMap;
+    }
+    
+    private static void fixMap( int[][] map) {
+        
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+               if ((map[x][y] >= 4 && map[x][y] > map[x][nextDot(y,1)]
+                        && map[x][y] > map[nextDot(x,1)][y]
+                        && map[x][y] > map[x][prevDot(y,1)]
+                        && map[x][y] > map[prevDot(x,1)][y])) {
+                   map[x][y]--;
+                } 
+               else if( map[x][y] < 3 && (map[x][y] < map[x][nextDot(y,1)]
+                        && map[x][y] < map[nextDot(x,1)][y]
+                        && map[x][y] < map[x][prevDot(y,1)]
+                        && map[x][y] < map[prevDot(x,1)][y])){
+                   map[x][y]++;
+                }
+            }
+        }
+        
     }
 
 

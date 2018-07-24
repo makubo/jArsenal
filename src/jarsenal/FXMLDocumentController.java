@@ -87,8 +87,6 @@ public class FXMLDocumentController implements Initializable {
         m.setSeed(seed);
         map = new Map(m.generateMap(), size, seed);
         //map = new Map(hmap.generateMap(), size, seed);
-        //int[][] matr = hmap.generateMap();
-
         
         mapPanel.setPrefHeight(size + 10);
         mapPanel.setPrefWidth(size + 10);
