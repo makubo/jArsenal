@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -65,6 +66,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Pane mapPanel;
     
+    @FXML
+    private ChoiceBox generatorSelector;
+    
     FrameCreator fc;
     HillMap hmap;
     Map map;
@@ -85,8 +89,10 @@ public class FXMLDocumentController implements Initializable {
         
         DiamondSquareMap m = new DiamondSquareMap(size);
         m.setSeed(seed);
-        map = new Map(m.generateMap(), size, seed);
-        //map = new Map(hmap.generateMap(), size, seed);
+        switch ((String) generatorSelector.getValue()){
+            case "Stupid Hill Algorithm": map = new Map(hmap.generateMap(), size, seed);break;
+            case "Diamond Square Algorithm": map = new Map(m.generateMap(), size, seed); break;
+        }
         
         mapPanel.setPrefHeight(size + 10);
         mapPanel.setPrefWidth(size + 10);
@@ -184,7 +190,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {       
         initGraphics();
 
         anchorPane.prefWidthProperty().addListener((ov, oldValue, newValue) -> {
@@ -196,7 +202,7 @@ public class FXMLDocumentController implements Initializable {
             mainCanvas.setHeight(newValue.doubleValue());
             //drawClicked();
         });
-
+        
 //        mapPanel.addEventFilter(
 //                MouseEvent.ANY,
 //                new EventHandler<MouseEvent>() {
