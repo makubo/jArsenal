@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -65,6 +66,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Pane mapPanel;
+    
+    @FXML
+    private ChoiceBox generatorSelector;
     
     FrameCreator fc;
     HillMap hmap;
