@@ -5,7 +5,9 @@
  */
 package jarsenal;
 
+import java.util.Arrays;
 import java.util.Random;
+import jarsenal.TileTemplates;
 
 /**
  *
@@ -91,8 +93,54 @@ public class Map {
                 }
             }
         }
+		
+		for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+				if ( landscape[x][y] == 3 ) {
+					tileMap[x][y] = TileTemplates.findTile(convertMatrixToTemplate(getLocationMatrix(x, y)));
+				}
+			}
+		}
     }
 
+	private int[][] getLocationMatrix(int x, int y){
+		int[][] locationMatrix = new int[3][3];
+		for (int ly = 0; ly < 3; ly++){
+			for (int lx = 0; lx < 3; lx++){
+				int nx = x + (lx - 1);
+				int ny = y + (ly - 1);
+				
+				if ( nx < 0 ) {
+					nx += size;
+				} else if ( nx >= size) {
+					nx -= size;
+				}
+				
+				if ( ny < 0 ) {
+					ny += size;
+				} else if ( ny >= size) {
+					ny -= size;
+				}
+				
+				locationMatrix[lx][ly] = landscape[nx][ny];
+			}
+		}
+		return locationMatrix;
+	}
+	
+	private int[][] convertMatrixToTemplate(int[][] matrix ){
+		for (int x = 0; x < matrix.length; x++){
+			for (int y = 0; y < matrix[x].length; y++){
+				if ( matrix[x][y] > 3 ) {
+					matrix[x][y] = 1;
+				} else {
+					matrix[x][y] = 0;
+				}
+			}
+		}
+		return matrix;
+	}
+	
     /**
      * @return the fakeLandscape
      */
@@ -153,8 +201,8 @@ public class Map {
     }
 
     private boolean isRightTopCorner(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]) {
             return true;
@@ -166,8 +214,8 @@ public class Map {
     private boolean isRightNormal(int x, int y) {
         if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]) {
             return true;
         } else {
             return false;
@@ -175,9 +223,9 @@ public class Map {
     }
 
     private boolean isRightBottomCorner(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
         } else {
@@ -186,9 +234,9 @@ public class Map {
     }
 
     private boolean isBottomNormal(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
         } else {
@@ -198,8 +246,8 @@ public class Map {
 
     private boolean isLeftBottomCorner(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
         } else {
@@ -210,8 +258,8 @@ public class Map {
     private boolean isLeftNormal(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]) {
             return true;
         } else {
             return false;
@@ -220,7 +268,7 @@ public class Map {
 
     private boolean isLeftCape(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
@@ -230,8 +278,8 @@ public class Map {
     }
 
     private boolean isHorisontal(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[next(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
+                && fakeLandscape[x][y] <= fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
@@ -241,7 +289,7 @@ public class Map {
     }
 
     private boolean isRightCape(int x, int y) {
-        if (fakeLandscape[x][y] == fakeLandscape[prev(x)][y]
+        if (fakeLandscape[x][y] <= fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
@@ -255,7 +303,7 @@ public class Map {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[x][prev(y)]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]) {
             return true;
         } else {
             return false;
@@ -265,8 +313,8 @@ public class Map {
     private boolean isVertical(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
-                && fakeLandscape[x][y] == fakeLandscape[x][next(y)]) {
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[x][next(y)]) {
             return true;
         } else {
             return false;
@@ -276,7 +324,7 @@ public class Map {
     private boolean isBottomCape(int x, int y) {
         if (fakeLandscape[x][y] > fakeLandscape[prev(x)][y]
                 && fakeLandscape[x][y] > fakeLandscape[next(x)][y]
-                && fakeLandscape[x][y] == fakeLandscape[x][prev(y)]
+                && fakeLandscape[x][y] <= fakeLandscape[x][prev(y)]
                 && fakeLandscape[x][y] > fakeLandscape[x][next(y)]) {
             return true;
         } else {

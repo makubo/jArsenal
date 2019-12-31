@@ -31,7 +31,7 @@ public final class Texture {
     }
 
     public static void setSummer(){
-        season = "fake";
+        season = "summer";
         loadTextures();
     }
     
@@ -49,7 +49,7 @@ public final class Texture {
         File dir = new File("graphics/" + season + "/landscape");
         for (File file : dir.listFiles()) {
             if ( file.isFile() ){
-                //System.out.println(file.getName().substring(0, file.getName().indexOf('.')) + " " + file.getPath());
+                System.out.println(file.getName().substring(0, file.getName().indexOf('.')) + " " + file.getPath());
                 String key = file.getName().substring(0, file.getName().indexOf('.'));
                 Tiles.put( key, new Image("file:" + file.getPath()));
             }
@@ -62,62 +62,8 @@ public final class Texture {
     }
     
     public static Image getTile(int key){
-        return getTile(String.valueOf(key));
+        return getTile(String.format("%04d", key));
+		//return getTile(String.valueOf(key));
     }
-//    /**
-//     * @return the deepOcean
-//     */
-//    public static Image getDeepOcean() {
-//        return deepOcean;
-//    }
-//
-//    /**
-//     * @return the middleOcean
-//     */
-//    public static Image getMiddleOcean() {
-//        return middleOcean;
-//    }
-//
-//    /**
-//     * @return the ocean
-//     */
-//    public static Image getOcean() {
-//        return ocean;
-//    }
-//
-////    /**
-////     * @return the shoal
-////     */
-////    public Image getShoal() {
-////        return shoal;
-////    }
-//
-//    /**
-//     * @return the Plain
-//     */
-//    public static Image getPlain() {
-//        return Plain;
-//    }
-//
-//    /**
-//     * @return the Hill
-//     */
-//    public static Image getHill() {
-//        return Hill;
-//    }
-//
-//    /**
-//     * @return the Plateau
-//     */
-//    public static Image getPlateau() {
-//        return Plateau;
-//    }
-//
-//    /**
-//     * @return the Mountain
-//     */
-//    public static Image getMountain() {
-//        return Mountain;
-//    }
 
 }

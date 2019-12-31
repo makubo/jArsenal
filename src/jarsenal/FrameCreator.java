@@ -71,11 +71,8 @@ public class FrameCreator {
                     tileY = 0 + ( y + startYtile - landscape.length);
                 }
                 
-                if (landscape[tileX][tileY] != 0) {
-                    tile = Texture.getTile(landscape[tileX][tileY]);
-                } else {
-                    tile = Texture.getTile("0000");
-                }
+                tile = Texture.getTile(landscape[tileX][tileY]);
+
 //                switch ( landscape[tileX][tileY] ) {
 //                    case 0:{
 //                        tile = Texture.getDeepOcean();

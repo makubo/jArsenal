@@ -29,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import jarsenal.MapFilter;
 
 /**
  *
@@ -82,10 +83,16 @@ public class FXMLDocumentController implements Initializable {
         int seed = Integer.valueOf(seedField.getText());
         hmap = new HillMap(size);
         hmap.setSeed(seed);
-        
+        MapFilter.setSeed(seed);
+		
         DiamondSquareMap m = new DiamondSquareMap(size);
         m.setSeed(seed);
-        map = new Map(m.generateMap(), size, seed);
+		int[][] landscape = m.generateMap();
+		
+		MapFilter.removeSingleHill(landscape);
+		MapFilter.removeHighElevation(landscape);
+        
+		map = new Map(landscape, size, seed);
         //map = new Map(hmap.generateMap(), size, seed);
         //int[][] matr = hmap.generateMap();
 

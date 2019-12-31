@@ -34,30 +34,22 @@ public class DiamondSquareMap {
     public int[][] generateMap(){
         squareNoise = 5;
         diamondNoise = 5;
-        //bi = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
 
         map = new float[size][size];
         int step = size;
 
-//        map[0][0] = rnd.nextInt(255);
-//        map[0][step/2] = rnd.nextInt(255);
-//        map[step/2][0] = rnd.nextInt(255);
-//        map[step/2][step/2] = rnd.nextInt(255);
         for (int y = 0; y <= size - size / 4; y = y + size / 4) {
             for (int x = 0; x <= size - size / 4; x = x + size / 4) {
                 map[y][x] = rnd.nextInt(2);
             }
         }
 
-        //printMap(map);
-
         for (int i = 2; i <= Math.sqrt(size); i++) {
             step = step / 2;
             if (step < 1) {
                 break;
             }
-
-            //System.out.println("Step = " + step);
+            
             for (int y = 0; y <= size - step; y = y + step) {
                 for (int x = 0; x <= size - step; x = x + step) {
                     squareProceed(x, y, step);
@@ -68,14 +60,9 @@ public class DiamondSquareMap {
                     diamondProceed(x, y, step);
                 }
             }
-            //drawMap(map);
         }
 
-        //normalizeMap();
-        //drawMap(map);
         return normalizeMap();
-        //return map;
-
     }
     
     public static void printMap(float[][] map) {
@@ -162,8 +149,6 @@ public class DiamondSquareMap {
             }
         }
 
-        //System.out.println("MAX = " + max);
-        //System.out.println("MIN = " + min);
         float add = Math.abs(min);
         max = max + Math.abs(min);
         min = 0;
