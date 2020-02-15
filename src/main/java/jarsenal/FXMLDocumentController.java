@@ -5,9 +5,9 @@
  */
 package jarsenal;
 
-import com.sun.deploy.uitoolkit.Applet2Adapter;
-import com.sun.deploy.uitoolkit.DragContext;
-import com.sun.deploy.uitoolkit.Window;
+//import com.sun.deploy.uitoolkit.Applet2Adapter;
+//import com.sun.deploy.uitoolkit.DragContext;
+//import com.sun.deploy.uitoolkit.Window;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -51,7 +51,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Canvas mapCanvas;
-
+    
     @FXML
     private TextField seedField;
 
