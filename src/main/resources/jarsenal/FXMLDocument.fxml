@@ -5,11 +5,12 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.*?>
 <?import javafx.collections.FXCollections?>
 
 <AnchorPane fx:id="anchorPane" id="AnchorPane" prefHeight="1000" prefWidth="1000" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jarsenal.FXMLDocumentController">
     <children>
-        <javafx.scene.canvas.Canvas fx:id="mainCanvas" onMouseClicked="#drawClicked" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <Canvas fx:id="mainCanvas" onMouseClicked="#drawClicked" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         <Button fx:id="button" text="Exit" onAction="#handleButtonAction" AnchorPane.topAnchor="5.0" AnchorPane.rightAnchor="5.0"/>
         <ChoiceBox fx:id="generatorSelector" value="Stupid Hill Algorithm" AnchorPane.topAnchor="180.0" AnchorPane.rightAnchor="5.0">
             <items>
@@ -25,7 +26,7 @@
         
         <Pane fx:id="mapPanel" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <javafx.scene.canvas.Canvas fx:id="mapCanvas" layoutX="0" layoutY="0"/>
+                <Canvas fx:id="mapCanvas" layoutX="0" layoutY="0"/>
             </children>
         </Pane>
         
