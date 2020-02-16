@@ -106,10 +106,7 @@ public class FXMLDocumentController implements Initializable {
         mapCanvas.setHeight(size);
         mapCanvas.setWidth(size);
         
-        
-        
         Color color;
-        //color = Color.web(colorString);
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -176,19 +173,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     public void drawClicked() {
-        //gc.clearRect(0, 0, mainCanvas.getWidth(), mainCanvas.getHeight());
-        //Random rnd = new Random();
-        //gc.setFill(Color.rgb(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255)));
-        //gc.fillRect(0, 0, mainCanvas.getWidth(), mainCanvas.getHeight());
-        //gc.setFill(Color.BLUE);
-        //gc.fillOval(60, 60, 30, 10);
         
-        //Image grass = new Image("file:graphics/0001.bmp");
-        //gc.drawImage(grass, -5, -2);
-        //if (fc != null ) {
-            //fc.setLandscape(hmap.generateMap());
-            //fc.getFrame();
-        //}
     }
 
     @FXML
